@@ -66,15 +66,16 @@ local ClearAllButMatches = function(opts)
   local cmd_del_selection = string.format([[%s,%sdelete _]], ls, le)
 
   vim.api.nvim_exec2(cmd_add_reg_c, {})
-  vim.api.nvim_exec2(cmd_del_selection, {})
-  vim.api.nvim_exec2("put! c", {})
 
   if is_whole_file then
     vim.api.nvim_exec2("$delete _", {})
+  else
+    vim.api.nvim_exec2(cmd_del_selection, {})
   end
+
+  vim.api.nvim_exec2("put! c", {})
 
   vim.fn.setreg("c", old_c)
 end
 vim.api.nvim_create_user_command("Cabm", ClearAllButMatches, { range = true })
-
 ```
